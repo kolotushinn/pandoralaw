@@ -1,11 +1,9 @@
 const express = require("express");
-const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
 const passport = require("passport");
-const cors = require("cors");
-require("dotenv").config();
 const mongoose = require("mongoose");
+
+require("dotenv").config();
 
 // Connect Routes To App
 const users = require("./routes/api/users");
@@ -25,21 +23,14 @@ mongoose
   .catch((err) => console.log(`Error: ${err}`));
 
 // Middlewares App
-app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cookieParser());
 
 // Passport Middleware
 app.use(passport.initialize());
 
 // Passport Config
 require("./config/passport")(passport);
-
-// cors
-if (process.env.MODE_ENV === "development") {
-  app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
-}
 
 // Use Routes
 app.use("/api/users", users);
