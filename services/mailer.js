@@ -6,8 +6,10 @@ const options = {
   // port: Number(process.env.NODEMAILER_PORT) || 2525,
   port: 465,
   auth: {
-    user: process.env.NODEMAILER_USER,
-    pass: process.env.NODEMAILER_PASS,
+    // user: process.env.NODEMAILER_USER,
+    // pass: process.env.NODEMAILER_PASS,
+    user: "kolotushins@gmail.com",
+    pass: "question???!!!???",
   },
 };
 
