@@ -11,7 +11,6 @@ const validateProfileInput = require("../../validation/profile");
 const Profile = require("../../models/Profile");
 // Load User Model
 const User = require("../../models/User");
-const profile = require("../../validation/profile");
 
 // @route   GET api/profile/test
 // @desc    Tests users route
