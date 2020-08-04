@@ -12,6 +12,11 @@ export default function HeaderProfile() {
         forgot_email: ''
     });
 
+    const [errors, setErrors] = React.useState({
+        status: false,
+        message: ''
+    });
+
     const onChange = e => { setFormData({ ...formData, [e.target.name]: e.target.value }) }
 
     const onSubmit = e => {
@@ -31,9 +36,36 @@ export default function HeaderProfile() {
     const handleCloseForgot = () => setShowForgot(false);
     const handleShowForgot = () => setShowForgot(true);
 
-    React.useEffect(() => {
-        axios('')
-    })
+    const registrationHandle = (e, url = "http://localhost:5000/api/users/register") => {
+        e.preventDefault();
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                email: formData.registration_email,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(json => console.log(json))
+    }
+
+    const authHandle = (e, url = "http://localhost:5000/api/users/login") => {
+        e.preventDefault();
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                email: formData.auth_email,
+                password: formData.auth_password,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(data => data.json())
+            .then(data => console.log(data))
+    }
 
     if (1) {
         return (
@@ -54,7 +86,7 @@ export default function HeaderProfile() {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Form onSubmit={e => onSubmit(e)} className="d-flex flex-column">
+                        <Form onSubmit={e => registrationHandle(e)} className="d-flex flex-column">
                             <Form.Group controlId="registration">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control onChange={e => { onChange(e) }} name="registration_email" type="email" placeholder="Enter email" />
@@ -138,7 +170,7 @@ export default function HeaderProfile() {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Form onSubmit={e => onSubmit(e)} className="d-flex flex-column">
+                        <Form onSubmit={e => authHandle(e)} className="d-flex flex-column">
 
                             <Form.Group controlId="auth">
                                 <Form.Label>Email address</Form.Label>
@@ -167,7 +199,7 @@ export default function HeaderProfile() {
                         <Button variant="primary">Understood</Button>
                     </Modal.Footer>
                 </Modal>
-            </React.Fragment>
+            </React.Fragment >
         )
 
 
